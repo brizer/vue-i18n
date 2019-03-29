@@ -8,7 +8,7 @@ const build = require('./bundle')
 if (!exist('dist')) {
   mkdir('dist')
 }
-
+//拿到入口配置
 let entries = getAllEntries()
 
 // filter entries via command line arg
@@ -18,5 +18,5 @@ if (process.argv[2]) {
     return filters.some(f => b.dest.indexOf(f) > -1)
   })
 }
-
+//走构建
 build(entries)

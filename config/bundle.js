@@ -6,9 +6,11 @@ const uglify = require('uglify-js')
 
 module.exports = build
 
+//build构建命令
 function build (entries) {
   let built = 0
   const total = entries.length
+  //保证多种打包方式异步执行
   const next = () => {
     buildEntry(entries[built]).then(() => {
       built++
@@ -19,15 +21,18 @@ function build (entries) {
   }
   next()
 }
-
+//每个入口的构建
 function buildEntry (config) {
   const output = config.output
   const { file, banner } = output
   const isProd = /min\.js$/.test(file)
+  //通过rollup手动api来进行打包
   return rollup.rollup(config)
     .then(bundle => bundle.generate(output))
     .then(({ code }) => {
+      //拿到打包后的代码
       if (isProd) {
+        //如果走.min.js流程
         var minified = (banner ? banner + '\n' : '') + uglify.minify(code, {
           fromString: true,
           output: {
@@ -39,11 +44,12 @@ function buildEntry (config) {
         }).code
         return write(file, minified, true)
       } else {
+        //一般流程
         return write(file, code)
       }
     })
 }
-
+//写文件并提供压缩
 function write (dest, code, zip) {
   return new Promise((resolve, reject) => {
     function report (extra) {

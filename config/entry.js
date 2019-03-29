@@ -18,6 +18,7 @@ function classify (str) {
 }
 const moduleName = classify(pack.name)
 
+//定义不同打包文件的 配置定义
 const entries = {
   commonjs: {
     entry: resolve('src/index.js'),
@@ -49,6 +50,7 @@ const entries = {
   }
 }
 
+//将自定义配置和rollup的配置进行映射
 function genConfig (opts) {
   const config = {
     input: opts.entry,
