@@ -1,11 +1,16 @@
+//一个还算比较负责的typescript声明文件
+
 import Vue, { PluginFunction } from 'vue';
 
+//声明一个命名空间
 declare namespace VueI18n {
+  //类型别名
   type Path = string;
   type Locale = string;
   type Values = any[] | { [key: string]: any };
   type Choice = number;
   type LocaleMessage = string | LocaleMessageObject | LocaleMessageArray;
+  //各种接口
   interface LocaleMessageObject { [key: string]: LocaleMessage; }
   interface LocaleMessageArray { [index: number]: LocaleMessage; }
   interface LocaleMessages { [key: string]: LocaleMessageObject; }
@@ -16,7 +21,7 @@ declare namespace VueI18n {
 
   type DateTimeHumanReadable = 'long' | 'short' | 'narrow';
   type DateTimeDigital = 'numeric' | '2-digit';
-
+  //基于Intl.DateTimeFormatOptions相关API的接口
   interface SpecificDateTimeFormatOptions extends Intl.DateTimeFormatOptions {
     year?: DateTimeDigital;
     month?: DateTimeDigital | DateTimeHumanReadable;
@@ -144,6 +149,7 @@ export declare interface IVueI18n {
   pluralizationRules: VueI18n.PluralizationRulesMap;
 }
 
+//默认暴露出去的类 声明
 declare class VueI18n {
   constructor(options?: VueI18n.I18nOptions)
 
@@ -195,6 +201,7 @@ declare class VueI18n {
   static availabilities: VueI18n.IntlAvailability;
 }
 
+//声明模块，方便其他文件import
 declare module 'vue/types/vue' {
   interface Vue {
     readonly $i18n: VueI18n & IVueI18n;
