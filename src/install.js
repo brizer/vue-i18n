@@ -6,7 +6,7 @@ import numberComponent from './components/number'
 import { bind, update, unbind } from './directive'
 
 export let Vue
-
+//单独封装install方法，vue插件标配
 export function install (_Vue) {
   /* istanbul ignore if */
   if (process.env.NODE_ENV !== 'production' && install.installed && _Vue === Vue) {
@@ -23,7 +23,7 @@ export function install (_Vue) {
     warn(`vue-i18n (${install.version}) need to use Vue 2.0 or later (Vue: ${Vue.version}).`)
     return
   }
-
+  //对Vue原型的修改
   extend(Vue)
   Vue.mixin(mixin)
   Vue.directive('t', { bind, update, unbind })
@@ -31,6 +31,7 @@ export function install (_Vue) {
   Vue.component(numberComponent.name, numberComponent)
 
   // use simple mergeStrategies to prevent i18n instance lose '__proto__'
+  //自定义合并策略，这样就可以在new Vue时传入了。
   const strats = Vue.config.optionMergeStrategies
   strats.i18n = function (parentVal, childVal) {
     return childVal === undefined

@@ -1,5 +1,5 @@
 /* @flow */
-
+//项目入口文件
 import { install, Vue } from './install'
 import {
   warn,

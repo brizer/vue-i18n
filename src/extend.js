@@ -7,7 +7,7 @@ export default function extend (Vue: any): void {
       get () { return this._i18n }
     })
   }
-
+  //在vue的原型上增加自定义内容
   Vue.prototype.$t = function (key: Path, ...values: any): TranslateResult {
     const i18n = this.$i18n
     return i18n._t(key, i18n.locale, i18n._getMessages(), this, ...values)
